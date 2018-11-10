@@ -14,6 +14,7 @@ class Proyecto extends Component {
         this.state = {
             nombre: '',
             tareas: [],
+            id_Proyecto: "",
             // owner: Meteor.userId(),           // _id of logged in user
             // username: Meteor.user().username, // username of logged in user
         }
@@ -24,6 +25,11 @@ class Proyecto extends Component {
         proyecto._id = Math.random().toString(36).substring(2, 9);
         //Collection
         Meteor.call('proyecto.insert', proyecto);
+    }
+
+    handleUpdate(tarea) {
+        tarea._id = Math.random().toString(36).substring(2, 9);
+        Meteor.call('proyectos.update', tarea);
     }
 
     filtroNombre(nombre) {
@@ -38,54 +44,64 @@ class Proyecto extends Component {
         });
     }
 
+    onVerTareas(e) {
+
+    }
+
     render() {
 
         var proyectoList = this.props.proyectos.filter(this.filtroNombre(this.state.nombre)).map(
             proyecto => {
-
-                var fechas = proyecto.fechaFinal + "";
+                var fechas = proyecto.fechaEntrega + "";
                 var fecha = fechas.split("/");
-
                 var fechaIn = proyecto.fechaInicio + "";
                 var fecIni = fechaIn.split("/");
 
                 return (
-                    <li className={new Date(fecha[1] + "/" + fecha[0] + "/" + fecha[2]) < new Date() ? "Red" : ''} key ={proyecto.id}>
-                        Id: {proyecto.id}
-                        Nombre: {proyecto.name}
-                        Responsable: {proyecto.responsable}
-                        Descripción: {proyecto.descripcion}
-                        Fecha Inicio: {fecIni[1]+"/"+fecIni[0]+"/"+fecIni[2]}
-                        Fecha Entrega: {fecha[1]+"/"+fecha[0]+"/"+fecha[2]}
-                    </li>
+                    <form onSubmit={this.onVerTareas.bind(this)}>
+                        <li className={new Date(fecha[1] + "/" + fecha[0] + "/" + fecha[2]) < new Date() ? "Red list-group-item" : "list-group-item"} key={proyecto.id} value={this.state.id_Proyecto}>
+                            Id: {proyecto.id} <br></br>
+                            Nombre: {proyecto.name} <br></br>
+                            Responsable: {proyecto.responsable} <br></br>
+                            Descripción: {proyecto.descripcion} <br></br>
+                            Fecha Inicio: {fecIni[1] + "/" + fecIni[0] + "/" + fecIni[2]} <br></br>
+                            Fecha Entrega: {fecha[1] + "/" + fecha[0] + "/" + fecha[2]} <br></br>
+                        </li>
+                        <button className="btn btn-primary">Ver tareas</button>
+                    </form>
                 );
             }
         );
 
-
         return (
             <div className="Proyecto">
-            <h1>Proyectos {this.props.owner}</h1>
-            <div className="">
-                <ProyectoForm guardar={this.handleGuardar.bind(this)} />
+                <div className="ProyectForm">
+                    <div className="">
+                        <ProyectoForm guardar={this.handleGuardar.bind(this)} />
+                    </div>
+                </div>
+                <div className="container Proyecto-distribucion">
+                    <div className="columnas-left">
+                        <div className="SearchBar">
+                            <label>Filtro...</label>
+                            <input className="form-control" type="text" onChange={this.updateInput.bind(this)} ref="search" />
+                            <ul className="list-group">
+                                {proyectoList}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="columnas-right">
+                        <Tasks guardarTarea={this.handleUpdate.bind(this)}></Tasks>
+                    </div>
+                </div>
+                <br></br>
             </div>
-            <div className="SearchBar">
-                <label>Filtro...</label>
-                <input className="form-control" type="text" onChange={this.updateInput.bind(this)} ref="search" />
-            </div>
-            <ul className="list-group">
-                {proyectoList}
-            </ul>
-            <br></br>
-        </div>
         );
     }
 }
 
 export default withTracker(() => {
-
     Meteor.subscribe('proyectos');
-
     return {
         proyectos: Colleccion.find({}).fetch(),
         // currentUser: Meteor.user(), 

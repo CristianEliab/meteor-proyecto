@@ -9,22 +9,18 @@ if (Meteor.isServer) {
     Meteor.publish('tasks', function tasksPublication() {
         return Colleccion.find();
     });
+    Meteor.publish('proyectos', function tasksPublication() {
+        return Colleccion.find();
+    });
 }
 
 Meteor.methods({
-    'tarea.insert'(task) {
-
-        Colleccion.insert(task);
-        //   owner: this.userId,
-        //   username: Meteor.users.findOne(this.userId).username,
-    },
     'proyecto.insert'(proyecto) {
-
         Colleccion.insert(proyecto);
         //   owner: this.userId,
         //   username: Meteor.users.findOne(this.userId).username,
     },
-    'tasks.remove'(taskId) {
-        Colleccion.remove(taskId);
+    'proyectos.update'(tarea) {
+        Colleccion.update(tarea.idProyecto, {$push:tarea});
     },
 });

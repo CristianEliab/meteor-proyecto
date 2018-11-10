@@ -19,7 +19,7 @@ export default class MainPage extends Component {
       <div>
         <div className="MainPage">
           <h1 className="text-center">
-            {loggedIn ? 'Welcome ' + currentUser.username : ''}
+            {loggedIn ? 'Hola ' + currentUser.username : ''}
             <Service></Service>
             <Footer></Footer>
           </h1>

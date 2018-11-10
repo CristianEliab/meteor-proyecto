@@ -7,3 +7,24 @@
 .Red{
     background-color: red;
 }
+
+li {
+    font-size: 0.4em;
+}
+
+.Proyecto-distribucion{
+    display: -webkit-inline-box;
+    padding: 3%;
+}
+
+.columnas-left{
+    float: left;
+    margin-left: 18%;
+    column-count:1;
+}
+
+.columnas-right{
+    float: right;
+    margin-left: 12%;
+    column-count:1;
+}

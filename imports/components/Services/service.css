@@ -2,9 +2,13 @@
 /*--/services --*/
 
 .container {
-    margin-left: inherit;
+    margin-left: 6%;
 }
 
+.navbar-default .navbar-nav > li > a {
+    color: #777;
+    font-size: medium;
+}
 
 .services h3,
 .contact-agileits-title h3,
