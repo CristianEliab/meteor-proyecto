@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ProyectoItem from './ProyectoItem'
 import ProyectoForm from './ProyectoForm';
-
+import Tasks from '../Tareas/Tasks.js';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Colleccion } from '../api/colleccion.js';
+import { Colleccion } from '../../api/colleccion.js';
 
 import { Meteor } from 'meteor/meteor';
+import './proyecto.css';
 
 class Proyecto extends Component {
 
@@ -42,23 +42,42 @@ class Proyecto extends Component {
 
         var proyectoList = this.props.proyectos.filter(this.filtroNombre(this.state.nombre)).map(
             proyecto => {
-                return <ProyectoItem key={proyecto._id} proyecto={proyecto} />
+
+                var fechas = proyecto.fechaFinal + "";
+                var fecha = fechas.split("/");
+
+                var fechaIn = proyecto.fechaInicio + "";
+                var fecIni = fechaIn.split("/");
+
+                return (
+                    <li className={new Date(fecha[1] + "/" + fecha[0] + "/" + fecha[2]) < new Date() ? "Red" : ''} key ={proyecto.id}>
+                        Id: {proyecto.id}
+                        Nombre: {proyecto.name}
+                        Responsable: {proyecto.responsable}
+                        Descripción: {proyecto.descripcion}
+                        Fecha Inicio: {fecIni[1]+"/"+fecIni[0]+"/"+fecIni[2]}
+                        Fecha Entrega: {fecha[1]+"/"+fecha[0]+"/"+fecha[2]}
+                    </li>
+                );
             }
         );
 
+
         return (
             <div className="Proyecto">
-                <h1>Proyectos {this.props.owner}</h1>
-                <div className="SearchBar p-4">
-                    <label>Filtro...</label>
-                    <input className="form-control" type="text" onChange={this.updateInput.bind(this)} ref="search" />
-                </div>
-                <ul className="list-group">
-                    {proyectoList}
-                </ul>
-                <br></br>
+            <h1>Proyectos {this.props.owner}</h1>
+            <div className="">
                 <ProyectoForm guardar={this.handleGuardar.bind(this)} />
             </div>
+            <div className="SearchBar">
+                <label>Filtro...</label>
+                <input className="form-control" type="text" onChange={this.updateInput.bind(this)} ref="search" />
+            </div>
+            <ul className="list-group">
+                {proyectoList}
+            </ul>
+            <br></br>
+        </div>
         );
     }
 }

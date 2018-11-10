@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import DatePicker from 'react-date-picker';
 
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import './proyectoForm.css';
 
 class ProyectoForm extends Component {
 
@@ -12,33 +12,28 @@ class ProyectoForm extends Component {
             name: "",
             descripcion: "",
             responsable: "",
-            fechaInicio: moment(),
-            fechaEntrega: moment(),
+            fechaEntrega: new Date(),
+            fechaInicio: new Date(),
             estado: "",
         }
-        this.handleChangeInicio = this.handleChangeInicio.bind(this);
-        this.handleChangeEntrega = this.handleChangeEntrega.bind(this);
     }
 
-    onLimpiar(e) {
-        this.setState({
-            id: "",
-            name: "",
-            descripcion: "",
-            responsable: "",
-            fechaInicio: "",
-            fechaEntrega: "",
-            estado: ""
-        });
-    }
     onGuardar(e) {
+        var month = this.state.fechaEntrega.getMonth() + 1;
+        var day = this.state.fechaEntrega.getDate();
+        var year = this.state.fechaEntrega.getFullYear();
+
+        var mes = this.state.fechaInicio.getMonth() + 1;
+        var dia = this.state.fechaInicio.getDay();
+        var anio = this.state.fechaInicio.getFullYear();
+
         var proyectos = {
             id: this.state.id,
             name: this.state.name,
             descripcion: this.state.descripcion,
             responsable: this.state.responsable,
-            fechaInicio: this.state.fechaInicio,
-            fechaEntrega: this.state.fechaEntrega,
+            fechaInicio: dia + "/" + mes + "/" + anio,
+            fechaEntrega: day + "/" + month + "/" + year,
             estado: this.state.estado
         }
         e.preventDefault();
@@ -60,67 +55,54 @@ class ProyectoForm extends Component {
         });
     }
 
-    handleChangeInicio(date) {
-        this.setState({
-            fechaInicio: moment(),
 
-        });
-    }
+    onChangeInicio = fechaInicio => this.setState({ fechaInicio })
 
-    handleChangeEntrega(date) {
-        this.setState({
-            fechaEntrega: moment(),
-        });
-    }
+    onChangeEntrega = fechaEntrega => this.setState({ fechaEntrega })
 
     render() {
         return (
-            <div className="ProyectoForm col-sm-9 col-md-9 col-lg-9">
+            <div className="ProyectoForm">
                 <form onSubmit={this.onGuardar.bind(this)}>
-                    <div className="col-sm-6">
-                        <div className="form-group">
+                    <div id="columnas">
+                        <div >
                             <label>ID</label>
                             <input type="text" className="form-control" name="id" value={this.state.id} onChange={this.updateInput.bind(this)} />
                         </div>
-                        <div className="form-group">
+                        <div >
                             <label>Nombre</label>
                             <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.updateInput.bind(this)} />
                         </div>
-                        <div className="form-group">
+                        <div >
                             <label>Descripción</label>
                             <input type="text" className="form-control" name="descripcion" value={this.state.descripcion} onChange={this.updateInput.bind(this)} />
                         </div>
-                        <div className="form-group">
+                        <div >
                             <label>Responsable</label>
                             <input type="text" className="form-control" name="responsable" value={this.state.responsable} onChange={this.updateInput.bind(this)} />
                         </div>
                     </div>
-                    <div className="col-sm-6">
-                        <div className="form-group">
-                            <label>Fecha inicio</label>
-                            <input type="date" className="form-control" name="responsable" value={this.state.fechaInicio} onChange={this.updateInput.bind(this)} />
-
-                        </div>
-                        <div className="form-group">
-                            <label>Fecha entrega</label>
-                            <DatePicker selected={this.state.fechaEntrega}
-                                onChange={this.handleChangeEntrega} />
-
-                        </div>
-                        <div className="form-group">
+                    <div id="columnas2">
+                        <div >
                             <label>Estado</label>
                             <input type="text" className="form-control" name="estado" value={this.state.estado} onChange={this.updateInput.bind(this)} />
                         </div>
-                        <div className="form-group">
+                        <div >
+                            <label>Fecha inicio</label>
+                            <DatePicker type="Text" className="form-control" name="fechaInicio" value={this.state.fechaInicio} onChange={this.onChangeInicio} />
+                        </div>
+                        <div >
+                            <label>Fecha entrega</label>
+                            <DatePicker type="Text" className="form-control" name="fechaFinal" value={this.state.fechaEntrega} onChange={this.onChangeEntrega} />
+                        </div>
+                        <div >
                             <br></br>
                             <button className="btn btn-primary">Guardar</button>
                         </div>
                     </div>
+
                 </form>
-                <form onSubmit={this.onLimpiar.bind(this)}>
-                    <button className="btn btn-secundary">Limpiar</button>
-                </form>
-            </div>
+            </div >
         );
     }
 }

@@ -1,0 +1,9 @@
+.SearchBar {
+    float: unset;
+    display: contents;
+    width: 327px;
+}
+
+.Red{
+    background-color: red;
+}

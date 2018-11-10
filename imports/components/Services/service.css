@@ -1,0 +1,62 @@
+
+/*--/services --*/
+
+.container {
+    margin-left: inherit;
+}
+
+
+.services h3,
+.contact-agileits-title h3,
+.client-review-head h3,
+.agileits-gal-title h3 {
+    color: #337ab7;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 4em;
+    letter-spacing: 3px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.w3-services-text h3 {
+    font-size: 5em;
+}
+
+.w3-services-text p {
+    font-size: 1em;
+    color: #212121;
+    margin: 2em 0;
+}
+
+.services-icon1 {
+    font-size: 3em;
+    color: #e25111;
+}
+
+.services-icon1 {
+    margin: 1em 0;
+}
+
+.w3-agile-services-right img {
+    width: 100%;
+}
+
+.services-head li {
+    display: inline-block;
+    list-style: none;
+}
+
+.services-head li h3 {
+    color: #e25111;
+}
+
+.services-head li h5 {
+    color: #e25111;
+}
+
+.services-icon1 h3 {
+    color: #333;
+}
+
+
+/*--//services --*/

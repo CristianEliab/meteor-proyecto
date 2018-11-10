@@ -1,1 +1,1 @@
-import '../imports/components/api/colleccion.js';
+import '../imports/api/colleccion.js';

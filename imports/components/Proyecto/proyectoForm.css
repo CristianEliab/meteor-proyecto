@@ -1,0 +1,61 @@
+input{
+    font-size: 5%;
+}
+
+label{
+    font-size: 50%;
+}
+
+.col-md-9 {
+    float: right;
+    display: -webkit-inline-box;
+}
+
+form.limpiar {
+    display: inherit;
+    margin-left: 100%;
+    margin-top: 30%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    margin-left: 6px;
+    padding: -4.5%;
+}
+
+.ProyectoForm {
+    width: fit-content;
+}
+
+#columnas {
+    column-count: 4;
+    column-gap: 160px;
+    column-rule: 3px dotted gray;
+}
+
+#columnas2 {
+    column-count: 4;
+    column-gap: 160px;
+    column-rule: 3px dotted gray;
+}
+
+.react-date-picker__calendar .react-calendar {
+    border-width: thin;
+    width: 245px;
+    height: 210px;
+    font-size: x-small;
+}
+
+.ProyectoForm {
+    width: fit-content;
+    height: 200px;
+}
+
+.react-date-picker__calendar {
+    width: 222px;
+    max-width: 78vw;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+}

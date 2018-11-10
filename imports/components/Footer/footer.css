@@ -1,0 +1,26 @@
+/*-- footer --*/
+
+.footer-w3 {
+    text-align: center;
+    background: black;
+    padding: 2em 0;
+}
+
+.footer-w3 p {
+    font-size: 0.4em;
+    color: #f5f5f5;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.footer-w3 p a {
+    color: #e25111;
+}
+
+.footer-w3 p a:hover {
+    color: #fff;
+}
+
+.footer-w3 p a:hover {
+    text-decoration: underline;
+}
