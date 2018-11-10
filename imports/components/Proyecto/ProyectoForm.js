@@ -98,8 +98,8 @@ class ProyectoForm extends Component {
                     <div className="col-sm-6">
                         <div className="form-group">
                             <label>Fecha inicio</label>
-                            <DatePicker selected={this.state.fechaInicio}
-                                onChange={this.handleChangeInicio} />
+                            <input type="date" className="form-control" name="responsable" value={this.state.fechaInicio} onChange={this.updateInput.bind(this)} />
+
                         </div>
                         <div className="form-group">
                             <label>Fecha entrega</label>

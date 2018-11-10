@@ -36,6 +36,8 @@ class Tasks extends Component {
 }
 
 export default withTracker(() => {
+    Meteor.subscribe('tasks');
+    console.log(Colleccion.find({}).fetch());
     return {
         tasks: Colleccion.find({}).fetch(),
     };
