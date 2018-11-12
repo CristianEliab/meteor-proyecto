@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import TaskItem from './TaskItem'
-import TaskForm from './TaskForm';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Colleccion } from '../../api/colleccion.js';
 
 class Tasks extends Component {
     constructor() {
@@ -17,6 +13,7 @@ class Tasks extends Component {
 
     onGuardar(e) {
         var tasks = {
+            _id:"",
             id: this.state.id,
             name: this.state.name,
             descripcion: this.state.descripcion,
@@ -41,23 +38,15 @@ class Tasks extends Component {
 
 
     render() {
-        var tasksList = this.props.tasks.map(
-            task => {
-                return <TaskItem key={task._id} task={task} />
-            }
-        );
         return (
             <div className="Tasks">
-                <h1>Las Tareas del Proyecto {this.props.owner}</h1>
-                <ul className="list-group">
-                    {tasksList}
-                </ul>
+                <h1>Crear tareas {this.props.owner}</h1>
                 <br></br>
                 <div className="TaskForm">
                     <form onSubmit={this.onGuardar.bind(this)}>
                         <div className="col-sm-6">
                             <div className="form-group">
-                                <label>ID</label>
+                                <label>ID proyecto</label>
                                 <input type="text" className="form-control" name="id" value={this.state.id} onChange={this.updateInput.bind(this)} />
                             </div>
                             <div className="form-group">
@@ -84,10 +73,4 @@ class Tasks extends Component {
     }
 }
 
-export default withTracker(() => {
-    // Meteor.subscribe('tasks');
-    console.log(Colleccion.find({}).fetch());
-    return {
-        tasks: Colleccion.find({}).fetch(),
-    };
-})(Tasks);
+export default Tasks;

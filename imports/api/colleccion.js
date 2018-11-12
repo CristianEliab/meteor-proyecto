@@ -21,6 +21,6 @@ Meteor.methods({
         //   username: Meteor.users.findOne(this.userId).username,
     },
     'proyectos.update'(tarea) {
-        Colleccion.update(tarea.idProyecto, {$push:tarea});
+        Colleccion.update(tarea.idProyecto, {$push:{tareas:{tarea}}});
     },
 });

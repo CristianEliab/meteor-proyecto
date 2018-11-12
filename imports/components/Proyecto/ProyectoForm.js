@@ -34,7 +34,8 @@ class ProyectoForm extends Component {
             responsable: this.state.responsable,
             fechaInicio: dia + "/" + mes + "/" + anio,
             fechaEntrega: day + "/" + month + "/" + year,
-            estado: this.state.estado
+            estado: this.state.estado,
+            tareas: []
         }
         e.preventDefault();
         this.props.guardar(proyectos);

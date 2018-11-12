@@ -15,8 +15,6 @@ class Proyecto extends Component {
             nombre: '',
             tareas: [],
             id_Proyecto: "",
-            // owner: Meteor.userId(),           // _id of logged in user
-            // username: Meteor.user().username, // username of logged in user
         }
 
     }
@@ -29,7 +27,19 @@ class Proyecto extends Component {
 
     handleUpdate(tarea) {
         tarea._id = Math.random().toString(36).substring(2, 9);
-        Meteor.call('proyectos.update', tarea);
+        var projecto;
+
+        var proyectoList = this.props.proyectos.filter(this.filtroNombre(this.state.nombre)).map(
+            proyecto => {
+                if (proyecto.id == tarea.id)
+                    return (
+                        projecto = proyecto
+                    );
+            }
+        );
+        console.log(projecto);
+        console.log(tarea + "paso");
+        Meteor.call('proyectos.update', projecto, tarea);
     }
 
     filtroNombre(nombre) {
@@ -48,7 +58,9 @@ class Proyecto extends Component {
 
     }
 
+
     render() {
+        var numero = 0;
 
         var proyectoList = this.props.proyectos.filter(this.filtroNombre(this.state.nombre)).map(
             proyecto => {
@@ -57,21 +69,54 @@ class Proyecto extends Component {
                 var fechaIn = proyecto.fechaInicio + "";
                 var fecIni = fechaIn.split("/");
 
-                return (
-                    <form onSubmit={this.onVerTareas.bind(this)}>
-                        <li className={new Date(fecha[1] + "/" + fecha[0] + "/" + fecha[2]) < new Date() ? "Red list-group-item" : "list-group-item"} key={proyecto.id} value={this.state.id_Proyecto}>
-                            Id: {proyecto.id} <br></br>
-                            Nombre: {proyecto.name} <br></br>
-                            Responsable: {proyecto.responsable} <br></br>
-                            Descripción: {proyecto.descripcion} <br></br>
-                            Fecha Inicio: {fecIni[1] + "/" + fecIni[0] + "/" + fecIni[2]} <br></br>
-                            Fecha Entrega: {fecha[1] + "/" + fecha[0] + "/" + fecha[2]} <br></br>
-                        </li>
-                        <button className="btn btn-primary">Ver tareas</button>
-                    </form>
+                var tareasList = proyecto.tareas.map(
+                    tareas => {
+                        numero++;
+                        return (
+                            <li key={tareas.id}>
+                                Tarea Numero_{numero}<br></br>
+                                Id: {tareas.id} <br></br>
+                                Name: {tareas.name} <br></br>
+                                Descripcion: {tareas.descripcion} <br></br>
+                                Prioridad: {tareas.prioridad} <br></br>
+                            </li>
+                        );
+                    }
                 );
+                console.log(tareasList);
+                console.log("hola");
+                return (
+                    <div key={proyecto.id}>
+                        {
+                            this.props.usuario.username == proyecto.responsable ?
+                                <form onSubmit={this.onVerTareas.bind(this)}>
+                                    <li className={new Date(fecha[1] + "/" + fecha[0] + "/" + fecha[2]) < new Date() ? "Red list-group-item" : "list-group-item"} key={proyecto.id} value={this.state.id_Proyecto}>
+                                        Id: {proyecto.id} <br></br>
+                                        Nombre: {proyecto.name} <br></br>
+                                        Responsable: {proyecto.responsable} <br></br>
+                                        Descripción: {proyecto.descripcion} <br></br>
+                                        Fecha Inicio: {fecIni[1] + "/" + fecIni[0] + "/" + fecIni[2]} <br></br>
+                                        Fecha Entrega: {fecha[1] + "/" + fecha[0] + "/" + fecha[2]} <br></br>
+                                    </li>
+                                    Tareas del proyecto
+                                    <ul>
+                                        {tareasList}
+                                    </ul>
+
+                                </form>
+                                : <div>
+                                    <li className="Red list-group-item" key={proyecto.id} >
+                                        El responsable es diferente al logeado <br></br>
+                                    </li>
+                                </div> 
+                        }
+                    </div>
+                )
+
             }
         );
+
+
 
         return (
             <div className="Proyecto">
@@ -94,6 +139,7 @@ class Proyecto extends Component {
                         <Tasks guardarTarea={this.handleUpdate.bind(this)}></Tasks>
                     </div>
                 </div>
+
                 <br></br>
             </div>
         );
@@ -104,6 +150,6 @@ export default withTracker(() => {
     Meteor.subscribe('proyectos');
     return {
         proyectos: Colleccion.find({}).fetch(),
-        // currentUser: Meteor.user(), 
+        usuario: Meteor.user(),
     };
 })(Proyecto);
